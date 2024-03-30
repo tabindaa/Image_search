@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { BASE_URL, PER_PAGE_COUNT } from "./utils/constants";
+import Button from "./Button";
 
 function App() {
   const searchInputRef = useRef();
   const [images, setImages] = useState([]);
-  const [total_pages, setTotal_pagess] = useState([]);
+  const [total_pages, setTotal_pagess] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ function App() {
 
   return (
     <div className="container mx-auto">
-      <h1 className="font-bold text-center text-3xl text-slate-700">
+      <h1 className="text-center border p-12 my-4 bg-indigo-400 text-5xl text-slate-700">
         Image Search
       </h1>
       <div className="m-4 flex justify-center">
@@ -60,32 +61,15 @@ function App() {
         </form>
       </div>
       <div className="flex justify-center">
-        <button
-          className="w-24 mx-2 p-2 rounded bg-blue-400"
-          onClick={() => handleButtonClick("nature")}
-        >
-          Nature
-        </button>
-        <button
-          className="w-24 mx-2 px-2 py-2 rounded bg-blue-400"
-          onClick={() => handleButtonClick("birds")}
-        >
-          Birds
-        </button>
-        <button
-          className="w-24 mx-2 px-2 py-2 rounded bg-blue-400"
-          onClick={() => handleButtonClick("science")}
-        >
-          Science
-        </button>
-        <button
-          className="w-24 mx-2 px-2 py-2 rounded bg-blue-400"
-          onClick={() => handleButtonClick("lamps")}
-        >
-          Lamps
-        </button>
+        <Button label={"nature"} handleButtonClick={handleButtonClick}></Button>
+        <Button label={"birds"} handleButtonClick={handleButtonClick}></Button>
+        <Button
+          label={"science"}
+          handleButtonClick={handleButtonClick}
+        ></Button>
+        <Button label={"lamps"} handleButtonClick={handleButtonClick}></Button>
       </div>
-      <div className="grid gap-x-4 gap-y-2 grid-cols-1 md:grid-cols-4 lg:grid-cols-6 my-10">
+      <div className="grid gap-x-4 gap-y-2 grid-cols-2 md:grid-cols-4 lg:grid-cols-6 my-10">
         {images.map((img) => (
           <img
             key={img.id}
@@ -94,22 +78,24 @@ function App() {
           />
         ))}
       </div>
-      <p className="flex justify-center">
-        <button
-          className="mx-2 px-4 rounded bg-blue-400 w-24"
-          disabled={pageNumber < 2}
-          onClick={handlePreviousButtonClick}
-        >
-          Previous
-        </button>
-        <button
-          className="mx-2 px-4 rounded bg-blue-400 w-24"
-          disabled={pageNumber == total_pages}
-          onClick={handleNextButtonClick}
-        >
-          Next
-        </button>
-      </p>
+      {!!images.length && (
+        <p className="flex justify-center">
+          <button
+            className="w-24 mx-2 p-2 rounded bg-indigo-200 text-slate-700"
+            disabled={pageNumber < 2}
+            onClick={handlePreviousButtonClick}
+          >
+            Previous
+          </button>
+          <button
+            className="w-24 mx-2 p-2 rounded bg-indigo-200 text-slate-700"
+            disabled={pageNumber == total_pages}
+            onClick={handleNextButtonClick}
+          >
+            Next
+          </button>
+        </p>
+      )}
     </div>
   );
 }
