@@ -1,14 +1,16 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { BASE_URL, PER_PAGE_COUNT } from "./utils/constants";
-import "./App.css";
 
 function App() {
-  console.log(import.meta.env.VITE_ACCESS_KEY);
   const searchInputRef = useRef();
   const [images, setImages] = useState([]);
   const [total_pages, setTotal_pagess] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
+
+  useEffect(() => {
+    fetchImages();
+  }, [pageNumber]);
 
   const fetchImages = async () => {
     const { data } = await axios.get(
@@ -26,7 +28,6 @@ function App() {
     e.preventDefault();
     fetchImages();
   };
-  console.log(total_pages);
 
   const handleButtonClick = (text) => {
     searchInputRef.current.value = text;
@@ -60,25 +61,25 @@ function App() {
       </div>
       <div className="flex justify-center">
         <button
-          className="mx-2 px-4 rounded bg-blue-400"
+          className="w-24 mx-2 p-2 rounded bg-blue-400"
           onClick={() => handleButtonClick("nature")}
         >
           Nature
         </button>
         <button
-          className="mx-2 px-4 rounded bg-blue-400"
+          className="w-24 mx-2 px-2 py-2 rounded bg-blue-400"
           onClick={() => handleButtonClick("birds")}
         >
           Birds
         </button>
         <button
-          className="mx-2 px-4 rounded bg-blue-400"
+          className="w-24 mx-2 px-2 py-2 rounded bg-blue-400"
           onClick={() => handleButtonClick("science")}
         >
           Science
         </button>
         <button
-          className="mx-2 px-4 rounded bg-blue-400"
+          className="w-24 mx-2 px-2 py-2 rounded bg-blue-400"
           onClick={() => handleButtonClick("lamps")}
         >
           Lamps
@@ -93,15 +94,17 @@ function App() {
           />
         ))}
       </div>
-      <p className="read-the-docs">
+      <p className="flex justify-center">
         <button
-          className="mx-2 px-4 rounded bg-blue-400"
+          className="mx-2 px-4 rounded bg-blue-400 w-24"
+          disabled={pageNumber < 2}
           onClick={handlePreviousButtonClick}
         >
           Previous
         </button>
         <button
-          className="mx-2 px-4 rounded bg-blue-400"
+          className="mx-2 px-4 rounded bg-blue-400 w-24"
+          disabled={pageNumber == total_pages}
           onClick={handleNextButtonClick}
         >
           Next
