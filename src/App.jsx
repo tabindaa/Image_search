@@ -78,17 +78,25 @@ function App() {
           />
         ))}
       </div>
-      {!!images.length && (
+      {images?.length >1 && (
         <p className="flex justify-center">
           <button
-            className="w-24 mx-2 p-2 rounded bg-indigo-200 text-slate-700"
+            className={
+              pageNumber < 2
+                ? 'opacity-30 w-24 mx-2 p-2 rounded bg-indigo-200 text-slate-700"}'
+                : "w-24 mx-2 p-2 rounded bg-indigo-200 text-slate-700"
+            }
             disabled={pageNumber < 2}
             onClick={handlePreviousButtonClick}
           >
             Previous
           </button>
           <button
-            className="w-24 mx-2 p-2 rounded bg-indigo-200 text-slate-700"
+            className={
+              pageNumber == total_pages
+                ? 'opacity-30 w-24 mx-2 p-2 rounded bg-indigo-200 text-slate-700"}'
+                : "w-24 mx-2 p-2 rounded bg-indigo-200 text-slate-700"
+            }
             disabled={pageNumber == total_pages}
             onClick={handleNextButtonClick}
           >
