@@ -14,9 +14,10 @@ function App() {
   }, [pageNumber]);
 
   const fetchImages = async () => {
+    const searchQuery= searchInputRef.current.value || 'random'
     const { data } = await axios.get(
       `${BASE_URL}&query=${
-        searchInputRef.current.value
+        searchQuery
       }&page=${pageNumber}&per_page=${PER_PAGE_COUNT}&client_id=${
         import.meta.env.VITE_ACCESS_KEY
       }`
@@ -78,7 +79,7 @@ function App() {
           />
         ))}
       </div>
-      {images?.length >1 && (
+      {images?.length > 1 && (
         <p className="flex justify-center">
           <button
             className={
